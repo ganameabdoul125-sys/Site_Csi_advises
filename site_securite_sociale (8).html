@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Security Investigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+			
+        }
+		
+		
+			 h4 {
+			 text-align:center;
+			   color:black;
+			 }
+			 
+			 
+        .tagline {
+            color: #666;
+            font-size: 1.2rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card h3 {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .stats {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tips-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tips-section h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tip-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .tip-item:hover {
+            transform: translateX(10px);
+        }
+
+        .tip-number {
+            background: white;
+            color: #667eea;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 2rem auto;
+            display: block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+			color: white;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 2rem;
+            }
+            
+            .cards-container {
+			
+                grid-template-columns: 1fr;
+				 
+            }
+}
+        }
+    </style>
+</head>
+<body>
+    <header>
+    
+  <h1>
+    <img src="data:image/png;base64,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" alt="Logo" class="logo">
+     <h5>Central Security Investigation </h5>
+  </h1>
+  
+  <p class="tagline">Protégez-vous, protégez les autres</p>
+  
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <p>La sécurité dans notre vie sociale n'est pas qu'une responsabilité individuelle, c'est un engagement collectif. Chaque jour, nos choix et nos actions impactent non seulement notre bien-être, mais aussi celui de notre communauté. Ensemble, construisons un environnement plus sûr pour tous.</p>
+            </div>
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <span class="card-icon">🚗</span>
+                <h3>Sécurité Routière</h3>
+                <p>Respectez le code de la route, portez votre ceinture et ne conduisez jamais sous l'influence. Chaque vie compte sur nos routes.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🔒</span>
+                <h3>Sécurité Numérique</h3>
+                <p>Protégez vos données personnelles, utilisez des mots de passe forts et soyez vigilant face aux arnaques en ligne.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">👥</span>
+                <h3>Sécurité Personnelle</h3>
+                <p>Soyez attentif à votre environnement, évitez les situations à risque et n'hésitez pas à demander de l'aide si nécessaire.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🏠</span>
+                <h3>Sécurité à Domicile</h3>
+                <p>Sécurisez votre logement avec des systèmes de verrouillage adéquats et soyez prudent avec les installations électriques.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">💬</span>
+                <h3>Communication</h3>
+                <p>Partagez les informations de sécurité avec votre entourage. La sensibilisation est la première ligne de défense.</p>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🚨</span>
+                <h3>Urgences</h3>
+                <p>Connaissez les numéros d'urgence et sachez comment réagir face à une situation dangereuse.</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <h2>Pourquoi la Sécurité Sociale est Cruciale</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">80%</span>
+                    <p>des accidents sont évitables avec de bonnes pratiques</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <p>de responsabilité pour protéger notre communauté</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">24/7</span>
+                    <p>La sécurité est une vigilance de chaque instant</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+		<h4>Central Security Investigation</h4>
+            <h2>10 Conseils Essentiels pour Votre Sécurité</h2>
+            
+            <div class="tip-item">
+                <div class="tip-number">1</div>
+                <p>Restez toujours conscient de votre environnement et des personnes autour de vous</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">2</div>
+                <p>Ne partagez jamais d'informations personnelles sensibles avec des inconnus</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">3</div>
+                <p>Gardez vos appareils électroniques à jour avec les dernières mises à jour de sécurité</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">4</div>
+                <p>Établissez un plan d'urgence familial et assurez-vous que tous le connaissent</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">5</div>
+                <p>Soyez prudent sur les réseaux sociaux - limitez les informations publiques</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">6</div>
+                <p>Apprenez les gestes de premiers secours qui peuvent sauver des vies</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">7</div>
+                <p>Vérifiez régulièrement les détecteurs de fumée et extincteurs à domicile</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">8</div>
+                <p>Ne laissez jamais vos boissons sans surveillance dans les lieux publics</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">9</div>
+                <p>Signalez tout comportement suspect aux autorités compétentes</p>
+            </div>
+
+            <div class="tip-item">
+                <div class="tip-number">10</div>
+                <p>Éduquez vos proches, surtout les enfants, sur les dangers potentiels</p>
+            </div>
+        </div>
+
+       <button class="cta-button" onclick="window.location.href='https://csisecu.org/'">
+  Je m'engage pour la sécurité
+</button>
+    </div>
+
+    <footer>
+        <p>Central Security Investigation</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">La sécurité commence par la sensibilisation !</p>
+		<p style="margin-top: 1rem; font-size: 0.9rem;">Made by Abdoulganame @Csi2025</p>
+    </footer>
+
+    <script>
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .tip-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Effet de parallaxe léger
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
